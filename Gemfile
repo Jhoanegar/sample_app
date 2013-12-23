@@ -2,10 +2,12 @@ source 'http://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.1'
+group :development, :production do
+  gem 'pg'
+end
 
 # Use sqlite3 as the database for Active Record
 group :development, :test do
-  gem 'sqlite3'
   gem 'rspec-rails'
 end
 
@@ -37,11 +39,9 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'sqlite3'
 end
 
-group :production do
-  gem 'pg'
-end
 
 ruby '2.0.0'
 # Use ActiveModel has_secure_password

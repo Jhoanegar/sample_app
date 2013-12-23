@@ -11,11 +11,15 @@ describe "Static pages" do
       page.should have_content('Sample App')
     end
 
-    it 'has the right title' do
+    it 'has the right base_title' do
       visit '/static_pages/home'
-      page.should have_title("#{base_title} | Home")
+      page.should have_title("#{base_title}")
     end
 
+    it "doesn't have a custom page title" do
+      visit '/static_pages/home'
+      page.should_not have_title("| Home")
+    end
   end
 
   describe "Help page" do
