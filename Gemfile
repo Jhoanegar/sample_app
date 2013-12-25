@@ -41,6 +41,7 @@ end
 group :test do
   gem 'capybara'
   gem 'sqlite3'
+  gem "nyan-cat-formatter"
 end
 
 group :production do
