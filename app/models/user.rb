@@ -6,4 +6,5 @@ class User < ActiveRecord::Base
                     uniqueness: { case_sensitive: false }
 
   before_save { self.email.downcase! }
+  has_secure_password
 end
