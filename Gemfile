@@ -42,6 +42,7 @@ group :test do
   gem 'capybara'
   gem 'sqlite3'
   gem "nyan-cat-formatter"
+  gem 'factory_girl_rails'
 end
 
 group :production do
