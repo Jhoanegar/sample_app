@@ -19,7 +19,16 @@ describe User do
     before { @user.name = '' }
     it { should_not be_valid }
   end
+  
+  describe 'email address with mixed case' do
+    let (:mixed_case_email) { "Foo@ExAmPle.cOm" }
 
+    its 'saved as all lower-case' do
+      @user.email = mixed_case_email
+      @user.save
+      expect(@user.reload.email).to eq mixed_case_email.downcase
+    end
+  end
 
   context 'when name is too long' do
     before { @user.name = 'a'*51 }
@@ -72,7 +81,7 @@ describe User do
 
   context 'when email format is invalid' do
     it 'should be invalid' do 
-      addresses = %w[user@foo,com user_at_foo.org example.user@foo.]
+      addresses = %w[user@foo,com user_at_foo.org example.user@foo..c]
       addresses.each do |invalid_address|
         @user.email = invalid_address
         expect(@user).not_to be_valid
