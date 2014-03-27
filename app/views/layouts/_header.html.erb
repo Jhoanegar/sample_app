@@ -6,7 +6,23 @@
         <ul class="nav navbar-nav pull-right">
           <li><%= link_to "Home", root_path %></li>
           <li><%= link_to "Help", help_path %></li>
-          <li><%= link_to "Sign in", '#' %></li>
+          <% if signed_in? %>
+            <li class="dropdown">
+              <button class="btn dropdown-toggle sr-only" type="button" data-toggle="dropdown" id="top-dropdown-menu">
+                Account <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="top-dropdown-menu">
+                <li role="presentation"><%= link_to "Profile", current_user %></li>
+                <li role="presentation"><%= link_to "Settings", "#" %></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation">
+                  <%= link_to "Sign out", signout_path, method: "delete" %>  
+                </li>
+              </ul>
+            </li>
+          <% else %>
+            <li><%= link_to "Sign in", signin_path %></li>
+          <% end %>
         </ul>
       </nav>
     </div>
