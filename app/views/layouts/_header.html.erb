@@ -8,9 +8,9 @@
           <li><%= link_to "Help", help_path %></li>
           <% if signed_in? %>
             <li class="dropdown">
-              <button class="btn dropdown-toggle sr-only" type="button" data-toggle="dropdown" id="top-dropdown-menu">
+              <a class="dropdown-toggle" type="button" data-toggle="dropdown" id="top-dropdown-menu">
                 Account <span class="caret"></span>
-              </button>
+              </a>
               <ul class="dropdown-menu" role="menu" aria-labelledby="top-dropdown-menu">
                 <li role="presentation"><%= link_to "Profile", current_user %></li>
                 <li role="presentation"><%= link_to "Settings", "#" %></li>
