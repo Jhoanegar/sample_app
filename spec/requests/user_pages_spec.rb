@@ -50,16 +50,19 @@ describe "User pages" do
     end
   end
  
-  describe "Profile page" do
+  describe "profile page" do
     let(:user) { FactoryGirl.create(:user) }
     before { visit user_path(user) }
     it { should have_content(user.name) }
     it { should have_title(user.name) }
   end
 
-  describe "Edit" do
+  describe "edit" do
     let(:user) { FactoryGirl.create(:user) }
-    before { visit edit_user_path(user) }
+    before do
+      sign_in user
+      visit edit_user_path(user)
+    end
 
     describe 'page' do
       it { should have_title("Edit user") }
@@ -71,5 +74,25 @@ describe "User pages" do
       before { click_button 'Save changes' }
       it { should have_error_message('error') }
     end
+
+    context 'with valid information' do
+      let(:new_name) { "New Name" }
+      let(:new_email) { "new@email.com" }
+      before do
+        fill_in "Name", with: new_name
+        fill_in "Email", with: new_email
+        fill_in "Password", with: user.password
+        fill_in "Confirm password", with: user.password
+        click_button "Save changes"
+      end
+      
+      it { should have_title(new_name) }
+      it { should have_success_message('updated') }
+      it { should have_link('Sign out', href: signout_path) }
+      specify { expect(user.reload.name).to eq new_name }
+      specify { expect(user.reload.email).to eq new_email }
+    end 
+
+    
   end
 end
