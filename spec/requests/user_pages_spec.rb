@@ -107,7 +107,7 @@ describe "User pages" do
 
     it 'lists every user' do
       User.all.each do |user|
-        expect(page).to have_selector('li', text: user.name)
+        expect(page).to have_content(user.name)
       end
     end
   end
