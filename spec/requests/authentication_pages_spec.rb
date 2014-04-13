@@ -39,7 +39,7 @@ describe "Authentication" do
     end
   end
 
-  describe "Authorization" do
+  describe "authorization" do
     context "for non-signed-in users" do
       let(:user) { FactoryGirl.create(:user) }
 
@@ -56,6 +56,37 @@ describe "Authentication" do
           
           specify { expect(response).to redirect_to(signin_path) }
         end
+      end
+
+      context 'when attempting to visit a protected page' do
+        before do
+          visit edit_user_path(user)
+          fill_in "Email", with: user.email
+          fill_in "Password", with: user.password
+          click_button "Sign in"
+        end
+
+        context 'after signing in' do
+          it 'renders the desired protected page' do
+            expect(page).to have_title "Edit user"
+          end
+        end
+      end
+    end
+
+    context 'as a wrong user' do
+      let(:user) { FactoryGirl.create(:user) }
+      let(:wrong_user) { FactoryGirl.create(:user,
+                          email: 'wrong@email.com') }
+      before { sign_in user, no_capybara: true }
+
+      context 'submitting a GET request to the User#edit action' do
+        before { get edit_user_path(wrong_user) }
+
+        specify { expect(response.body).
+                      not_to match(full_title('Edit')) }
+        specify { expect(response).to redirect_to(root_url) }
+
       end
     end
   end
