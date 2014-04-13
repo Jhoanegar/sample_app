@@ -51,6 +51,11 @@ describe "Authentication" do
           it { should have_warning_message('Please sign in.') }
         end
 
+        context 'visiting the index page' do
+          before { visit users_path }
+          it { should have_titl('Sign in') }
+        end
+
         context 'submitting to the update action' do
           before { patch user_path(user) }
           
