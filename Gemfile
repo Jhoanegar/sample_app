@@ -5,6 +5,7 @@ gem 'rails', '4.0.1'
 gem 'bootstrap-sass'
 gem 'thin'
 gem 'spork-rails'
+gem 'faker'
 group :development, :production do
   gem 'pg'
 end
